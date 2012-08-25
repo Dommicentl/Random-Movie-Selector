@@ -60,6 +60,9 @@ public class GUI extends JFrame {
 		goButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				if(chooser == null){
+					chooser = new RandomFileChooser(settings.getCurrentFolder());
+				}
 				String file = chooser.getRandomMovieFile();
 				vlcExecuter.play(file);
 			}
