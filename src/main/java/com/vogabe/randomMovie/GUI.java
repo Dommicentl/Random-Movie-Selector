@@ -71,7 +71,7 @@ public class GUI extends JFrame {
 	}
 
 	private void setRootFrameProps() {
-		setSize(300, 220);
+		setSize(315, 260);
 		setVisible(true);
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
