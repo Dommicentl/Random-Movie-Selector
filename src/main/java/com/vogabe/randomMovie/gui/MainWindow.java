@@ -52,7 +52,7 @@ import com.vogabe.randomMovie.model.ListEntry;
 
 public class MainWindow {
 
-	private JFrame frame;
+	private JFrame frmRandomMovieSelector;
 	private JTextField vlcPathField;
 	private JTable folderTable;
 	private TableColumn pathColumn;
@@ -71,7 +71,7 @@ public class MainWindow {
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
+					window.frmRandomMovieSelector.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -94,13 +94,14 @@ public class MainWindow {
 		listController = new ListController();
 		mediaPlayerController = new MediaPlayerController(settingsController);
 		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 450);
-		frame.setMinimumSize(new Dimension(500, 450));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRandomMovieSelector = new JFrame();
+		frmRandomMovieSelector.setTitle("Random Movie Selector");
+		frmRandomMovieSelector.setBounds(100, 100, 500, 450);
+		frmRandomMovieSelector.setMinimumSize(new Dimension(500, 450));
+		frmRandomMovieSelector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout mainLayout = new GridBagLayout();
-		mainLayout.layoutContainer(frame);
-		frame.getContentPane().setLayout(mainLayout);
+		mainLayout.layoutContainer(frmRandomMovieSelector);
+		frmRandomMovieSelector.getContentPane().setLayout(mainLayout);
 		
 		JPanel mediaPlayerPanel = new JPanel();
 		GridBagLayout gbl_mediaPlayerPanel = new GridBagLayout();
@@ -111,7 +112,7 @@ public class MainWindow {
 		gbc_mediaPlayerPanel.insets = new Insets(5, 5, 5, 5);
 		gbc_mediaPlayerPanel.gridx = 0;
 		gbc_mediaPlayerPanel.gridy = 0;
-		frame.getContentPane().add(mediaPlayerPanel, gbc_mediaPlayerPanel);
+		frmRandomMovieSelector.getContentPane().add(mediaPlayerPanel, gbc_mediaPlayerPanel);
 		
 		JLabel lblVlc = new JLabel("Media Player");
 		lblVlc.setAlignmentY(0.0f);
@@ -160,7 +161,7 @@ public class MainWindow {
 		gbc_folderPanel.fill = GridBagConstraints.BOTH;
 		gbc_folderPanel.gridx = 0;
 		gbc_folderPanel.gridy = 1;
-		frame.getContentPane().add(folderPanel, gbc_folderPanel);
+		frmRandomMovieSelector.getContentPane().add(folderPanel, gbc_folderPanel);
 		
 		folderListModel = new DefaultListModel<ListEntry>();
 		folderList = new JList<ListEntry>(folderListModel);
@@ -214,14 +215,14 @@ public class MainWindow {
 		gbc_GoButton.gridx = 0;
 		gbc_GoButton.gridy = 2;
 		gbc_GoButton.insets = new Insets(5, 5, 5, 5);
-		frame.getContentPane().add(goButton,gbc_GoButton);
+		frmRandomMovieSelector.getContentPane().add(goButton,gbc_GoButton);
 		goButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				playRandomFile();
 			}
 		});
-		frame.getRootPane().setDefaultButton(goButton);
+		frmRandomMovieSelector.getRootPane().setDefaultButton(goButton);
 	}
 	
 	private void playRandomFile() {
@@ -229,7 +230,7 @@ public class MainWindow {
 		if(file != null)
 			mediaPlayerController.play(file);
 		else {
-			JOptionPane.showMessageDialog(frame, "No files to choose from");
+			JOptionPane.showMessageDialog(frmRandomMovieSelector, "No files to choose from");
 		}
 	}
 	
