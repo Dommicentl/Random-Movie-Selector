@@ -19,10 +19,12 @@ public class ListController {
 	private List<ListEntry> visualSearchList;
 	private List<String> actualSearchList;
 	private final String[] movieTypes = { ".avi", ".mp4", ".wmv", ".mkv" };
+	private SettingsController settingsController;
 
-	public ListController() {
+	public ListController(SettingsController settingsController) {
 		visualSearchList = new ArrayList<ListEntry>();
 		actualSearchList = new ArrayList<String>();
+		this.settingsController = settingsController;
 	}
 
 	public void addEntryToList(ListEntry entry) {
@@ -80,6 +82,9 @@ public class ListController {
 			return null;
 		Random random = new Random();
 		int index = random.nextInt(actualSearchList.size());
-		return actualSearchList.get(index);
+		String result = actualSearchList.get(index);
+		if(settingsController.getStoredOnlyOnce())
+			actualSearchList.remove(index);
+		return result;
 	}
 }

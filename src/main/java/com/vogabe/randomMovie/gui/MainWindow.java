@@ -37,6 +37,8 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,8 @@ import com.vogabe.randomMovie.controller.MediaPlayerController;
 import com.vogabe.randomMovie.controller.SettingsController;
 import com.vogabe.randomMovie.model.ListEntry;
 
+import javax.swing.JCheckBox;
+
 public class MainWindow {
 
 	private JFrame frmRandomMovieSelector;
@@ -62,6 +66,7 @@ public class MainWindow {
 	private ListController listController;
 	private MediaPlayerController mediaPlayerController;
 	private SettingsController settingsController;
+	private JCheckBox onlyOnceCheckBox;
 
 	/**
 	 * Launch the application.
@@ -91,7 +96,7 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		settingsController = new SettingsController();
-		listController = new ListController();
+		listController = new ListController(settingsController);
 		mediaPlayerController = new MediaPlayerController(settingsController);
 		
 		frmRandomMovieSelector = new JFrame();
@@ -209,6 +214,16 @@ public class MainWindow {
 		});
 		listButtonPanel.add(refreshButton);
 		
+		onlyOnceCheckBox = new JCheckBox("only once");
+		listButtonPanel.add(onlyOnceCheckBox);
+		onlyOnceCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				setOnlyCheckboxClick();				
+			}
+		});
+		onlyOnceCheckBox.setSelected(settingsController.getStoredOnlyOnce());
+		
 		JButton goButton = new JButton("Go");
 		GridBagConstraints gbc_GoButton = new GridBagConstraints();
 		gbc_GoButton.fill = GridBagConstraints.BOTH;
@@ -225,6 +240,15 @@ public class MainWindow {
 		frmRandomMovieSelector.getRootPane().setDefaultButton(goButton);
 	}
 	
+	protected void setOnlyCheckboxClick() {
+		if(onlyOnceCheckBox.isSelected()){
+			settingsController.storeOnlyOnce(true);
+		}
+		else {
+			settingsController.storeOnlyOnce(false);
+		}		
+	}
+
 	private void playRandomFile() {
 		String file = listController.getRandomFile();
 		if(file != null)
